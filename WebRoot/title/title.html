@@ -1,0 +1,51 @@
+<#include "/common/_layout.html"/>
+<@layout>
+<h1>论题管理&nbsp;&nbsp;<#if role!="1"><a href="${base}/title/add"><b>创建论题</b></a></#if>
+</h1>
+<div class="table_box">
+
+<form action="${base}/title/query" method="post">
+<div style="margin: 20px">
+ 标题：<input type="text" name="title" value="${title!""}" autocomplete="off"/><input value="查找"  type="submit">
+</div>
+</form>
+	<table class="list">
+		<tbody>
+			<tr>
+				<th width="4%">id</th>
+				<th width="35%">标题</th>
+				<th width="35%">描述</th>
+				<th width="8%">出题人</th>
+				<th width="5%">状态</th>
+				<th width="8%">操作</th>
+			</tr>
+			
+			<#list titlePage.getList() as x>
+			<tr>
+				<td style="text-align:left;">${x_index+1}</td>
+				<td style="text-align:left;">${x.title}</td>
+				<td style="text-align:left;">${x.content}</td>
+				<td style="text-align:left;">${x.username!""}</td>
+				<#if x.iselected ??>
+					<#if x.iselected=="0" >
+						<td style="text-align:left;color:#FF0000;">未选择</td>
+					<#else>
+						<td style="text-align:left;color:#00CC00;">已选择</td>
+					</#if>
+				</#if>
+				<td style="text-align:left;">
+				<#if role="0">
+					&nbsp;&nbsp;<a href="${base}/title/delete/${x.tid}">删除</a>
+					&nbsp;&nbsp;<a href="${base}/title/edit/${x.tid}">修改</a>
+				</#if>
+				</td>
+			</tr>
+			</#list>
+		</tbody>
+	</table>
+	<#include "/common/_paginate.html" />
+	<@paginate currentPage=titlePage.pageNumber totalPage=titlePage.totalPage actionUrl="${base}/title/" />
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+</div>
+</@layout>

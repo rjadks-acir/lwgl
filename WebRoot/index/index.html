@@ -1,0 +1,44 @@
+<#include "/common/_layout.html"/>
+<@layout>
+<h1>欢迎来到论文管理系统</h1>
+<div class="table_box">
+	<span id="userinfo">欢迎:</span>
+	<br><br><br>
+	<span id="submitcount"></span>
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+</div>
+
+
+<script>
+$(document).ready(function(){
+ $.ajax({
+		url:"${base}/admin/userinfo",
+		type:"post",
+		datatype:"json",
+		cache:"false",
+		success:function(obj){
+			var data=obj.userinfo;
+			var role="";
+			if(data.role=="1"){
+				role="学生";
+			}else if(data.role=="2"){
+				role="教师";
+			}else{
+				role="管理员";
+			}
+			$("#userinfo").append(role+","+data.realname);
+			if(data.role!="2"){
+				if(data.submitcount==0){
+					$("#submitcount").html("<b>提交状态：<a href='${base}/upload/add'>未提交</a></b>");
+				}else{
+					$("#submitcount").html("<b>提交状态：已提交</b><br>");
+					$("#submitcount").append("<b>提交次数："+data.submitcount+"</b>");
+				}
+			}
+		}
+	})
+  
+  })
+</script>
+</@layout>

@@ -1,0 +1,118 @@
+<#include "/common/_layout.html"/>
+<@layout>
+<style type="text/css">
+#pdf {
+	width: 800px;
+	height: 700px;
+	margin: 2em auto;
+	border: 10px solid #6699FF;
+}
+
+#pdf p {
+   padding: 1em;
+}
+
+#pdf object {
+   display: block;
+   border: solid 1px #666;
+}
+</style>
+
+
+<script type="text/javascript">
+/*
+
+      window.onload = function (){
+	  
+        var myPDF = new PDFObject({ 
+		
+			url: "${base}/file/${upload.filename}",
+			pdfOpenParams: {
+				navpanes: 1,
+				view: "FitV",
+				pagemode: "thumbs"
+			}
+		
+		}).embed();
+		
+      };
+*/
+
+window.onload = function (){
+
+	var success = new PDFObject({ url: "${base}/file/${upload.filename}"}).embed("pdf");
+	
+};
+
+$(function(){
+  $('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+});
+/*
+ * 
+
+function submit(){
+	var datas=$("#dataform").serialize();
+	$.ajax({
+		url:"${base}/upload/approve",
+		data:datas,
+		type:"post",
+		datatype:"json",
+		cache:"false",
+		success:function(obj){
+			alert("提交成功");
+		}
+	})
+}
+	
+	 */
+
+	$(function(){
+  		$('#loginform').submit(function(e){
+    	return true;
+ 	 });
+ 	 $('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+	});
+
+
+    </script>
+  
+<div class="table_box">
+	<div id="pdf">It appears you don't have Adobe Reader or PDF support in this web browser.</div>
+</div>
+
+<div class="table_box">
+<h1>论文基本信息:</h1>
+	<h1>论文名称：${upload.title}</h1>
+	<h1>关键词：${upload.keywords!''}</h1>
+	<h1>论文作者：${upload.username}</h1>
+	<h1>提交时间：${upload.uploadtime!''}</h1>
+	<h1>指导老师：</h1>
+	<h1>成绩：${upload.score!''}</h1>
+	<h1>审阅意见：
+	<#if upload.comment ??>
+		${upload.comment!''}
+	<#else>
+		<#if role!="1">
+		<a href="#loginmodal" id="modaltrigger"">未审批</a>
+		</#if>
+	</#if></h1>
+</div>
+
+ <div id="loginmodal" style="display:none;">
+    <h1>审阅</h1>
+    <form id="dataform" name="dataform" method="post" action="${base}/upload/approve">
+    	<input type="hidden" name="id" value="${upload.id}" />
+      <label >成&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;绩: </label>
+      <select name="score">
+      	<option value="优">优</option>
+      	<option value="良">良</option>
+      	<option value="中">中</option>
+      	<option value="差">差</option>
+      </select><br>
+      <label >评阅意见:</label>
+      <input type="text" name="comment" id="comment" ><br>
+        <input type="submit" name="submitbtn" id="submitbtn" value="提交" >
+    </form>
+   
+  </div>
+</@layout>

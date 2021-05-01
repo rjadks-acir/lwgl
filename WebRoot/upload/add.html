@@ -1,0 +1,46 @@
+<#include "/common/_layout.html" />
+<@layout>
+<h1>论题管理 ---&gt; 提交论文
+</h1>
+<div class="form_box">
+	<form action="${base}/upload/save" method="post"enctype="multipart/form-data">
+		<#include "_form.html" />
+	</form>
+</div>
+
+<script>
+function getTitle(obj){
+	$.ajax({
+		url:"${base}/upload/getitle",
+		type:"post",
+		data:"id="+obj.value,
+		dataType:"json",
+		cache:false,
+		success:function(obj){
+			 $("#title").html(" ");
+			 $.each(obj, function(index,title){   // 解析出data对应的Object数组  
+					$("#title").append('<option value="' +title.tid+  '">' +title.title+  '</option>');
+                    //alert(value.tid + "  " + value.content);  
+            });  
+			
+		}
+	})
+}
+function getTeacher(obj){
+	$.ajax({
+		url:"${base}/upload/getTeacher",
+		type:"post",
+		data:"tid="+obj.value,
+		dataType:"json",
+		cache:false,
+		success:function(obj){
+			 $("#teacher").html(" ");
+			$("#teacher").append('<option value="' +obj.id+  '">' +obj.teachername+  '</option>');
+		}
+	})
+}
+
+
+
+</script>
+</@layout>

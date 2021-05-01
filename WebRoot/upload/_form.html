@@ -1,0 +1,40 @@
+<fieldset class="solid">
+	<legend>提交论文</legend>
+	  <div>
+		<label>类型</label>
+		<select name="type"id="type">
+		<#list type as t>
+			<option value="${t.type_code}">${t.type}</option>
+		</#list>
+		</select>
+	</div>   
+	<div>
+		<label>指导老师</label>
+		 <select name="teacher"id="teacher" onchange="getTitle(this)">
+		<#list teacher as t>
+			<option value="${t.id}">${t.teachername}</option>
+		</#list>
+		</select>
+	</div>
+	<div>
+		<label>论题</label>
+		<select name="title"id="title" onchange="_getTeacher(this)">
+		<#list title as t>
+			<option value="${t.tid}">${t.title}</option>
+		</#list>
+		</select>
+	</div>   
+
+	<div>
+		<label>论文</label>
+		 <input type="file" id="file" name="file" />
+	</div>
+	<div>
+		<label>关键词</label>
+		 <input type="text" id="keywords" name="keywords"autocomplete="off" />
+	</div>
+	<div>
+		<label>&nbsp;</label>
+		<input value="提交" type="submit">
+	</div>
+</fieldset>

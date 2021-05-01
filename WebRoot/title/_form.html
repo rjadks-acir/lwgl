@@ -1,0 +1,16 @@
+<fieldset class="solid">
+	<legend>创建论题</legend>
+	<input type="hidden" name="title.tid" value="${(title.tid)!}" />
+	<div>
+		<label>标题</label>
+		<input type="text" name="title.title" value="${(title.title)!}" autocomplete="off"/>${titleMsg!}
+	</div>
+	<div>
+		<label>描述</label>
+		<textarea name="title.content" cols="80" rows="10" autocomplete="off">${(title.content)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>&nbsp;</label>
+		<input value="提交" type="submit">
+	</div>
+</fieldset>
