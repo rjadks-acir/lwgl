@@ -11,7 +11,7 @@ public class Title extends BaseTitle<Title> {
 	public static final Title dao = new Title();
 	
 	public Page<Title> paginate(int pageNumber, int pageSize) {
-		return paginate(pageNumber, pageSize, "select *", "from title order by tid asc");
+		return paginate(pageNumber, pageSize, "select t.tid,t.title,t.content,b.realname username,t.iselected", "from title t,user b where t.username=b.username order by t.tid asc");
 	}
 
 	public Object paginateByCondition(Integer pageNumber, int pageSize, String title) {

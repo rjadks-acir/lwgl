@@ -1,4 +1,4 @@
-jdbcUrl =jdbc:mysql://rdsn30pzhtlmd9xqnd74h.mysql.rds.aliyuncs.com:3306/r6kb0jfhm2320atr?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-user = r6kb0jfhm2320atr
-password =1993731
+jdbcUrl =jdbc:mysql://127.0.0.1:3306/lwgl?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+user = root
+password =root
 devMode = true
