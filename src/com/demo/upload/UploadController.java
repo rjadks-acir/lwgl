@@ -3,6 +3,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import com.demo.common.model.Pdfimage;
 import com.demo.common.model.Teacher;
 import com.demo.common.model.Title;
 import com.demo.common.model.Type;
@@ -37,9 +38,15 @@ public class UploadController extends Controller{
 		//String fileName=file.getFileName().substring(0, file.getFileName().length()-4);
 		//String[] str=fileName.split("_");
 		String path=PathKit.getWebRootPath()+"\\file\\"+System.currentTimeMillis()+".pdf";
+		
+		
+		
 		File newFile=new File(path);
 		File oldFile=file.getFile();
 		oldFile.renameTo(newFile);
+		
+		List<Pdfimage> list=Pdfimage.changePdfToImg(newFile);
+		Db.batchSave(list, list.size());
 		
 		String type=getPara("type");
 		String title=getPara("title");
@@ -66,6 +73,7 @@ public class UploadController extends Controller{
 	Upload upload=Upload.dao.find(" select t.id,b.type type,c.title ,d.realname username,t.keywords,t.realfilename,t.filename,t.uploadtime,t.score,t.comment from upload t ,type b, title c ,user d where t.username=d.username and t.title=c.tid and t.type=b.type_code and t.ndelete='0' and t.id= "+id).get(0);
 	setAttr("upload",upload);
 	setAttr("role",getSessionAttr("role"));
+	setAttr("pagesize",Db.queryInt("select b.pagesize from upload t ,(select distinct filename,pagesize from pdfimage) b where t.filename=b.filename and t.id="+id));
 	render("show.html");
 	}
 	

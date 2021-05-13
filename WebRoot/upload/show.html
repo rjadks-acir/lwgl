@@ -76,8 +76,20 @@ function submit(){
 
     </script>
   
-<div class="table_box">
-	<div id="pdf">It appears you don't have Adobe Reader or PDF support in this web browser.</div>
+<div class="table_box" >
+	<div class="infor">
+		<div class="page">
+		<a class="home" href="#">首页</a>
+		<a class="up" href="#">上一页</a>
+		<a class="down" href="#">下一页</a>
+		<a class="end" href="#">尾页</a>
+		<div class="no">共${pagesize}页</div>
+		<button class="go" type="button">跳转</button>
+		<input type="text" class="pa" value="1">页
+		</div>
+	</div>
+	<image  style="border:5px solid	#000000 ;" height="1200" width="990"  class="img"src="${base}/image/getpdfimage?filename=${upload.filename}&page=1"></image>
+	<!--  <div id="pdf">It appears you don't have Adobe Reader or PDF support in this web browser.</div>-->
 </div>
 
 <div class="table_box">
@@ -96,6 +108,8 @@ function submit(){
 		<a href="#loginmodal" id="modaltrigger"">未审批</a>
 		</#if>
 	</#if></h1>
+	
+
 </div>
 
  <div id="loginmodal" style="display:none;">
@@ -115,4 +129,87 @@ function submit(){
     </form>
    
   </div>
+  
+  <script> 
+$(document).ready(function(){
+  	//上一页
+    $(".up,.up1").click(function(){
+      var page=parseInt($(".pa").val());//取当前值并使转为int类型
+      page--;//自减1
+	  var bfs=page/385*100+"%";
+      if (page <1 ){ //判断是否到达首页
+        alert("已经是首页了！");
+      } else {
+		$(".progress").val(bfs);//将百分值付给进度条
+        $(".pa").val(page);//将减少后的值付给页码框
+        $(".img").attr("src",""); //在图片未加载完成前不显示
+       // if (page < 10) p= "00" + page; else {if (page < 100) p= "0" + page; else p=page;};//如页码小于三位数给前面补零
+        $(".img").attr("src","${base}/image/getpdfimage?filename=${upload.filename}&page="+page);//改变页码
+        
+        page1=page-1;
+     	//if (page1 < 10) p1= "00" + page1; else {if (page1 < 100) p1= "0" + page1; else p1=page1;};
+		var img = $('<img />').attr('src', "${base}/image/getpdfimage?filename=${upload.filename}&page="+page1);
+      }
+	});
+	//下一页
+	$(".down,.down1").click(function(){
+	var page=parseInt($(".pa").val());//取当前值并使转为int类型
+      page++;//自加1
+	var bfs=page/385*100+"%";
+      if (page >parseInt(${pagesize}) ){
+        alert("已经是尾页了！");
+      } else {
+		$(".progress").width(bfs);//将百分值付给进度条
+        $(".pa").val(page);//将增加后的值付给页码框
+        $(".img").attr("src","");//在图片未加载完成前不显示
+       
+       // if (page < 10) p= "00" + page; else {if (page < 100) p= "0" + page; else p=page;};
+      	$(".img").attr("src","${base}/image/getpdfimage?filename=${upload.filename}&page="+page);//改变页码
+      //	预加载下一页
+      	page1=page+1;
+     	//if (page1 < 10) p1= "00" + page1; else {if (page1 < 100) p1= "0" + page1; else p1=page1;};
+		var img = $('<img />').attr('src', "${base}/image/getpdfimage?filename=${upload.filename}&page="+page1);
+
+      }
+	});
+	//首页
+	$(".home").click(function(){
+	$(".progress").width("0%");//将0付给进度条
+      $(".pa").val(1);
+      $(".img").attr("src","");  
+      page=1;
+      $(".img").attr("src","${base}/image/getpdfimage?filename=${upload.filename}&page="+page);
+	});
+	//尾页
+	$(".end").click(function(){ 
+      var page=parseInt(${pagesize});
+	  $(".progress").width("100%");//将100付给进度条
+      $(".pa").val(page);
+      $(".img").attr("src","");
+      //if (page < 10) p= "00" + page; else {if (page < 100) p= "0" + page; else p=page;};      
+      $(".img").attr("src","${base}/image/getpdfimage?filename=${upload.filename}&page="+page);
+	});
+	//左右键翻页
+/* 	$(document).keydown(function(event){ 
+		if(event.keyCode==37){ 
+		$(".up").click(); } 
+		if(event.keyCode==39){ 
+		$(".down").click(); }
+	}); */
+	//点击“回到顶部”在200毫内返回到顶部
+	$('.top').click(function(){
+		$("html,body").animate({scrollTop:0},200);	
+	});	
+	//跳转
+	$('.go').click(function(){
+		var page=$(".pa").val();
+		if ( page ==""){ page= 1};
+		$(".pa").val(page);
+        $(".img").attr("src","");
+		//if (page < 10) p= "00" + page; else {if (page < 100) p= "0" + page; else p=page;};      
+      	$(".img").attr("src","${base}/image/getpdfimage?filename=${upload.filename}&page="+page);
+	});
+})
+</script>
+  
 </@layout>

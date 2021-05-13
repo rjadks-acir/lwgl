@@ -17,6 +17,7 @@ public class _MappingKit {
 
 	public static void mapping(ActiveRecordPlugin arp) {
 		arp.addMapping("blog", "id", Blog.class);
+		arp.addMapping("pdfimage", "id", Pdfimage.class);
 		arp.addMapping("teacher", "id", Teacher.class);
 		arp.addMapping("title", "tid", Title.class);
 		arp.addMapping("type", "type_code", Type.class);

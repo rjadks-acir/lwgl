@@ -4,6 +4,7 @@ import com.demo.admin.AdminController;
 import com.demo.blog.BlogController;
 import com.demo.common.interceptors.UserCheckInterceptors;
 import com.demo.common.model._MappingKit;
+import com.demo.image.ImageController;
 import com.demo.index.IndexController;
 import com.demo.title.TitleController;
 import com.demo.upload.UploadController;
@@ -43,6 +44,7 @@ public class DemoConfig extends JFinalConfig {
 		me.add("/title", TitleController.class);	
 		me.add("/upload", UploadController.class);
 		me.add("/admin", AdminController.class);
+		me.add("/image",ImageController.class);
 	}
 	
 	public static C3p0Plugin createC3p0Plugin() {
