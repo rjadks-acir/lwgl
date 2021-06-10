@@ -37,10 +37,8 @@ public class UploadController extends Controller{
 		UploadFile file=getFile("file");
 		//String fileName=file.getFileName().substring(0, file.getFileName().length()-4);
 		//String[] str=fileName.split("_");
-		String path=PathKit.getWebRootPath()+"\\file\\"+System.currentTimeMillis()+".pdf";
-		
-		
-		
+		//String path=PathKit.getWebRootPath()+"\\file\\"+System.currentTimeMillis()+".pdf";
+		String path=System.currentTimeMillis()+".pdf";
 		File newFile=new File(path);
 		File oldFile=file.getFile();
 		oldFile.renameTo(newFile);
